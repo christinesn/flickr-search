@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Button,
+  IconButton,
   Dialog,
   DialogContent,
   Card,
@@ -10,6 +10,9 @@ import {
   CircularProgress
 } from '@material-ui/core'
 import classNames from 'classnames'
+import CloseIcon from '@material-ui/icons/Close'
+import PersonIcon from '@material-ui/icons/Person'
+import {format} from 'date-fns'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -19,9 +22,9 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 7,
     marginBottom: 5,
     borderRadius: 0,
-    boxShadow: 'none',
-    border: '5px solid lightyellow',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    border: '5px solid #efefef',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    boxShadow: theme.shadows[2]
   },
   thumb: {
     height: 250,
@@ -41,27 +44,29 @@ const useStyles = makeStyles(theme => ({
   dialog: {
     '& .MuiDialog-paper': {
       padding: 0,
-      maxWidth: '95vw',
+      maxWidth: '45vw',
       maxHeight: '90vh',
-      borderRadius: 0
+      borderRadius: 2
     }
   },
   dialogContent: {
-    padding: '0 !important',
     overflow: 'hidden',
-    background: 'black'
+    background: 'white',
+    padding: '0 !important'
   },
   largeImage: {
-    maxHeight: '90vh',
-    maxWidth: '95vw'
+    maxHeight: '75vh',
+    maxWidth: '45vw',
+    borderRadius: 2,
+    paddingTop: 2
   },
   imagePreLoad: {
     display: 'none'
   },
   placeholder: {
-    height: '90vh',
-    width: '60vw',
-    background: 'black'
+    height: '80vh',
+    width: '45vw',
+    background: 'white'
   },
   spinner: {
     position: 'absolute',
@@ -76,24 +81,56 @@ const useStyles = makeStyles(theme => ({
     color: 'white'
   },
   details: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
+    fontSize: '0.8em',
     boxSizing: 'border-box',
-    padding: 16,
-    backgroundColor: 'rgba(0, 0, 0, 0.75)',
-    color: 'white',
+    color: 'rgba(0, 0, 0, 0.85)',
     width: '100%',
-    textAlign: 'center'
+    textAlign: 'left',
+    height: '15vh',
+    borderTop: '1px solid rgba(0, 0, 0, 0.3)',
+    padding: 10,
+    '& a': {
+      color: 'rgba(0, 0, 0, 0.8)',
+      fontWeight: 'bold',
+      textDecoration: 'none',
+      '&:hover, &:focus, &:active': {
+        color: 'rgba(0, 0, 0, 0.5)'
+      }
+    }
+  },
+  personIcon: {
+    fontSize: '1.2em',
+    position: 'absolute'
+  },
+  username: {
+    marginLeft: '1.5em'
+  },
+  date: {
+    marginLeft: '0.5em'
+  },
+  originalLink: {
+    float: 'right'
   },
   closeButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10
+    position: 'fixed',
+    top: 5,
+    right: 5,
+    padding: 7,
+    background: 'none',
+    color: 'rgba(0, 0, 0, 0.5)',
+    '&:hover, &:focus, &:active': {
+      color: 'rgba(0, 0, 0, 0.8)',
+      background: 'none'
+    },
+    '& .MuiSvgIcon-root': {
+      width: '1.25em',
+      height: '1.25em'
+    }
   },
   '@global': {
     '.MuiBackdrop-root': {
-      backgroundColor: 'rgba(0, 0, 0, 0.9)'
+      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+      cursor: 'pointer'
     }
   }
 }))
@@ -159,16 +196,37 @@ export function Photo ({ photo }) {
           <div
             className={classes.details}
           >
-            <a href="">{photo.ownername}</a>
-            uploaded {photo.dateuploaded}
-            <a href="">View on Flickr</a>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`https://www.flickr.com/people/${photo.owner}`}
+              title="Photo owner"
+            >
+              <PersonIcon className={classes.personIcon} />
+              <span className={classes.username}>
+                {photo.ownername}
+              </span>
+            </a>
+            <span className={classes.date} title="Date uploaded">
+              {format(new Date(photo.dateupload * 1000), 'LL/dd/yyyy')}
+            </span>
+            <a
+              href={`https://www.flickr.com/photos/${photo.owner}/${photo.id}`}
+              className={classes.originalLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View original
+            </a>
           </div>
-          <Button
+          <IconButton
             className={classes.closeButton}
+            aria-label="Close"
+            title="Close"
             onClick={() => setOpen(false)}
           >
-            Close
-          </Button>
+            <CloseIcon />
+          </IconButton>
         </DialogContent>
       </Dialog>
     </Card>
