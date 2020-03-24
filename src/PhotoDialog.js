@@ -17,8 +17,24 @@ const useStyles = makeStyles(theme => ({
     }
   },
   container: {
-    height: '46vw',
-    width: '50vw',
+    height: '26vw',
+    width: '30vw',
+    [theme.breakpoints.down('lg')]: {
+      height: '36vw',
+      width: '40vw'
+    },
+    [theme.breakpoints.down('md')]: {
+      height: '46vw',
+      width: '50vw'
+    },
+    [theme.breakpoints.down('sm')]: {
+      height: '56vw',
+      width: '60vw'
+    },
+    [theme.breakpoints.down('xs')]: {
+      height: '95vw',
+      width: '90vw'
+    },
     padding: 0,
     borderRadius: 2,
     backgroundColor: 'rgba(0, 0, 0, 1)',
@@ -28,7 +44,19 @@ const useStyles = makeStyles(theme => ({
   },
   photo: {
     width: '100%',
-    height: 'calc(46vw - 50px)',
+    height: 'calc(26vw - 50px)',
+    [theme.breakpoints.down('lg')]: {
+      height: 'calc(36vw - 50px)'
+    },
+    [theme.breakpoints.down('md')]: {
+      height: 'calc(46vw - 50px)'
+    },
+    [theme.breakpoints.down('sm')]: {
+      height: 'calc(56vw - 50px)'
+    },
+    [theme.breakpoints.down('xs')]: {
+      height: 'calc(95vw - 50px)'
+    },
     objectFit: 'cover',
     objectPosition: '100% 25%'
   },
@@ -99,10 +127,34 @@ const useStyles = makeStyles(theme => ({
     }
   },
   chevronLeft: {
-    left: '15%'
+    left: '28%',
+    [theme.breakpoints.down('lg')]: {
+      left: '20%'
+    },
+    [theme.breakpoints.down('md')]: {
+      left: '15%'
+    },
+    [theme.breakpoints.down('sm')]: {
+      left: '6%'
+    },
+    [theme.breakpoints.down('xs')]: {
+      left: '-4%'
+    }
   },
   chevronRight: {
-    right: '15%'
+    right: '28%',
+    [theme.breakpoints.down('lg')]: {
+      right: '20%'
+    },
+    [theme.breakpoints.down('md')]: {
+      right: '15%'
+    },
+    [theme.breakpoints.down('sm')]: {
+      right: '6%'
+    },
+    [theme.breakpoints.down('xs')]: {
+      right: '-4%'
+    }
   },
   close: {
     color: 'rgba(255, 255, 255, 0.95)',
