@@ -1,37 +1,40 @@
 import React from 'react';
 import axios from 'axios'
-import {SearchInput} from './SearchInput'
+import {Header} from './Header'
 import {SearchResults} from './SearchResults'
-import {makeStyles, CircularProgress} from '@material-ui/core'
+import {makeStyles} from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-      background: '#f8f8f8'
+      background: '#fafafa'
+    },
+    a: {
+      color: 'rgba(0, 0, 0, 0.8)',
+      textDecoration: 'none',
+      fontWeight: 'bold',
+      '&:hover': {
+        color: 'rgba(0, 0, 0, 0.7)'
+      }
     }
   }
 }))
 
-function App() {
+function App () {
   const [response, setResponse] = React.useState(null)
-  const [loading, setLoading] = React.useState(false)
+  const [loading, setLoading] = React.useState(true)
   const [error, setError] = React.useState(null)
   useStyles()
+
+  console.log(response)
 
   /**
    * Input = what is currently in the search field
    * Searched = the text that was last searched
    */
-  const [input, setInput] = React.useState('cats')
-  const [searched, setSearched] = React.useState(null)
-
-  /**
-   * Sort = what is currently in the sort field
-   * Sorted = the sort that was last searched
-   */
-  const [sort, setSort] = React.useState('relevance')
-  const [sorted, setSorted] = React.useState(null)
+  const [input, setInput] = React.useState('')
+  const [searched, setSearched] = React.useState('')
 
   const [page, setPage] = React.useState(1)
 
@@ -45,29 +48,27 @@ function App() {
     format: 'json',
     nojsoncallback: 1,
     per_page: 51,
+    sort: "interestingness-desc",
     /** Large photos only exist after 2012; limit to those to look pretty */
     min_upload_date: "2012-03-05 00:00:00",
-    extras: 'description,date_upload,owner_name,tags,views,url_o,url_n,url_z,url_h,path_alias'
+    extras: 'description,date_upload,date_taken,owner_name,tags,machine_tags,views,url_o,url_n,url_z,url_h,license,icon_server'
   }
-
-  console.log(response)
 
   async function newSearch (e) {
     e && e.preventDefault()
+    window.scrollTo(0, 0)
 
     setLoading(true)
-
     setSearched(input)
-    setSorted(sort)
 
     try {
       const response = await axios.get(apiURI, {
         params: {
           text: input,
           page: 1,
-          sort: sort,
           ...apiParams
-        }
+        },
+        timeout: 4000
       })
 
       setResponse(response)
@@ -80,7 +81,10 @@ function App() {
 
   /** handle page change */
   React.useEffect(() => {
+    window.scrollTo(0, 0)
     setLoading(true)
+
+    console.log('new page: ', page)
     
     async function fetchNewPage () {
       try {
@@ -88,9 +92,9 @@ function App() {
           params: {
             text: searched,
             page: page,
-            sort: sorted,
             ...apiParams
-          }
+          },
+          timeout: 4000
         })
 
         setResponse(response)
@@ -99,15 +103,13 @@ function App() {
       }
     }
 
-    fetchNewPage()
-    setLoading(false)
+    fetchNewPage().then(() => setLoading(false))
   }, [page])
 
   /** Search something on load */
   React.useEffect(() => {
     setLoading(true)
     setSearched(input)
-    setSorted(sort)
 
     async function fetchDefaultSearch () {
       try {
@@ -115,9 +117,9 @@ function App() {
           params: {
             text: input,
             page: 1,
-            sort: sort,
             ...apiParams
-          }
+          },
+          timeout: 4000
         })
 
         setResponse(response)
@@ -126,35 +128,25 @@ function App() {
       }
     }
 
-    fetchDefaultSearch()
-    setLoading(false)
+    fetchDefaultSearch().then(() => setLoading(false))
   }, [])
 
   return (
     <div>
-      <SearchInput
+      <div id="top" />
+      <Header
         input={input}
         setInput={setInput}
-        sort={sort}
-        setSort={setSort}
         newSearch={newSearch}
       />
-      <div>
-        {loading && !error && (
-          <CircularProgress />
-        )}
-        {error && !loading && (
-          <div>
-            Sorry, something went wrong.
-          </div>
-        )}
-        <SearchResults
-          response={response}
-          setPage={setPage}
-        />
-      </div>
+      <SearchResults
+        response={response}
+        setPage={setPage}
+        loading={loading}
+        error={error}
+      />
     </div>
   );
-}
+};
 
 export default App;
