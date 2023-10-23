@@ -1,4 +1,4 @@
-export default async function getData (input = 'nature photography', page = 1) {
+export default async function fetchData ({ input = 'nature' , page = 1 }) {
     const uri = 'https://api.flickr.com/services/rest/'
 
     const params = {
@@ -17,15 +17,17 @@ export default async function getData (input = 'nature photography', page = 1) {
         extras: 'description,date_taken,owner_name,url_z,url_l'
     }
 
-    const res = await fetch(uri + '?' + new URLSearchParams(params), {
-        next: {
-            cache: 'no-store'
-        }
-    })
+    const res = await fetch(uri + '?' + new URLSearchParams(params))
+    const jsonRes = await res.json();
 
-    if (!res.ok) {
-        throw new Error('Could not fetch data')
+    if (!res.ok || jsonRes.stat !== "ok") {
+        console.log(jsonRes);
+        
+        const error = new Error(jsonRes.message)
+        error.status = jsonRes.code
+
+        throw error
     }
 
-    return await res.json()
+    return jsonRes
 }

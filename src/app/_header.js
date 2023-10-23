@@ -1,4 +1,12 @@
-export default function Header () {
+'use client'
+
+export default function Header ({ setInput }) {
+    function handleSubmit (e) {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget)
+        setInput(formData.get('search_input'))
+    }
+
     return (
         <header className={`
             mb-12
@@ -47,8 +55,10 @@ export default function Header () {
                     border-2
                     border-slate-200
                     shadow
-                `}>
-                    <input type="text" placeholder="nature" className={`
+                    focus-within:outline
+                    focus-within:outline-slate-400
+                `} onSubmit={(e) => handleSubmit(e)}>
+                    <input type="text" id="search_input" name="search_input" placeholder="nature" className={`
                         text-xl
                         rounded-full
                         w-[80%]
@@ -56,12 +66,18 @@ export default function Header () {
                         pt-3
                         pb-3
                         text-zinc-600
+                        focus:outline-none
                     `} />
                     <button type="submit" title="Search" className={`
                         rounded-full
                         flex-none
                         p-3
+                        pl-4
+                        pr-4
                         group
+                        focus:outline-none
+                        focus:bg-slate-200
+                        hover:bg-slate-100
                     `}>
                         <svg
                             className="fill-slate-500 group-hover:fill-slate-700 transition duration-100"

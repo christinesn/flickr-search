@@ -22,7 +22,7 @@ export default function PhotoModal ({photo, modalOpen, setModalOpen}) {
                 <div role="dialog" className={`
                     relative
                     mx-auto
-                    bg-[rgb(235,235,235)]
+                    bg-white
                     top-[15%]
                     h-auto
                     min-h-[440px]
@@ -32,23 +32,28 @@ export default function PhotoModal ({photo, modalOpen, setModalOpen}) {
                     md:w-[500px]
                     lg:w-[600px]
                     shadow-lg
-                    rounded
-                    p-1
+                    rounded-xl
+                    p-4
+                    border-2
+                    border-gray-300
                 `}>
                     <div className={`
                         bg-cover
                         bg-center
                         w-full
                         h-[50vh]
-                        rounded
+                        rounded-xl
+                        border-2
+                        border-gray-300
+                        shadow
                     `} style={{
                         backgroundImage: `url(${photo.url_l})`,
                         backgroundColor: 'linear-gradient(45 deg, white, #efefef)'
                     }} />
-                    <div className="m-auto w-[90%] text-left pt-3 pb-4">
+                    <div className="m-auto w-[90%] text-left pt-4 pb-4">
                         <div className="flex pb-2">
                             <div className="font-bold text-sm inline-block w-1/2">
-                                <a href={`https://www.flickr.com/people/${photo.owner}`} target="_blank" title="Go to creator's profile">
+                                <a href={`https://www.flickr.com/people/${photo.owner}`} target="_blank" title="Go to creator's profile" className="text-lg text-sky-700 hover:text-sky-600 hover:underline">
                                     {photo.ownername}
                                 </a>
                             </div>
@@ -57,7 +62,7 @@ export default function PhotoModal ({photo, modalOpen, setModalOpen}) {
                             </div>
                         </div>
                         {photo.title && (
-                            <div className="text-sm italic w-[95%] m-auto border-2 border-gray-300 rounded p-3">
+                            <div className="text-sm italic w-[95%] m-auto mt-1 border-2 border-gray-300 rounded-xl bg-gray-100 shadow p-3">
                                 {photo.title}
                             </div>
                         )}

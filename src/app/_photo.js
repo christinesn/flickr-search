@@ -16,24 +16,20 @@ export default function Photo ({ photo }) {
             <a href="#" title="View" onClick={handleClick} className="inline-block relative group m-1 mt-0 mb-4" alt={photo.title}>
                 <div href="#" className={`
                         group-hover:shadow-xlg
-                        group-hover:from-gray-200
-                        group-hover:to-gray-300
                         group-hover:border-gray-400
                         transition
                         duration-100
                         relative
                         block
-                        p-2
+                        p-3
                         pb-[3rem]
                         shadow-lg
                         align-top
                         border-solid
                         border-2
                         border-gray-200
-                        bg-gradient-to-b
-                        from-white
-                        to-gray-100
-                        rounded-lg
+                        bg-white
+                        rounded-xl
                     `}
                 >
                     <div
@@ -43,18 +39,20 @@ export default function Photo ({ photo }) {
                             bg-cover
                             bg-center
                             shadow-inner
+                            shadow
                             border-solid
-                            border-2
-                            border-gray-300
+                            border-4
+                            border-gray-200
                             group-hover:border-gray-400
-                            w-[75vw]
-                            h-[65vw]
-                            sm:w-[37vw]
-                            sm:h-[33vw]
-                            lg:w-[25vw]
-                            lg:h-[23vw]
+                            rounded-xl
+                            w-[74vw]
+                            h-[64vw]
+                            sm:w-[36vw]
+                            sm:h-[32vw]
+                            lg:w-[24vw]
+                            lg:h-[22vw]
                             2xl:w-[18vw]
-                            2xl:h-[18vw]
+                            2xl:h-[16vw]
                         `}
                         style={{ backgroundImage: `url(${photo.url_z})` }}
                     />
