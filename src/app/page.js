@@ -54,7 +54,6 @@ export default function Home() {
   }
 
   const photos = getPhotos()
-  console.log(photos)
 
   return (
     <div className="w-full min-h-screen pb-24 pt-4 bg-slate-100">
