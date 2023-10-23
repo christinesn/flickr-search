@@ -3,6 +3,8 @@
 import Photo from './_photo'
 import Header from './_header'
 import ToTop from './_toTop'
+import Loading from './_loading'
+import Error from './_error'
 import useSWRIfinite from 'swr/infinite';
 import { useState, useEffect } from 'react'
 import fetchData from './helpers/fetchData';
@@ -52,6 +54,7 @@ export default function Home() {
   }
 
   const photos = getPhotos()
+  console.log(photos)
 
   return (
     <div className="w-full min-h-screen pb-24 pt-4 bg-slate-100">
@@ -60,12 +63,8 @@ export default function Home() {
         {data && photos && photos.map((photo) => (
           <Photo photo={photo} key={photo.id} />
         ))}
-        {isLoading && (
-          <div className="text-3xl">Loading...</div>
-        )}
-        {error && (
-          <div className="text-3xl">Error: {error.message}</div>
-        )}
+        {(!data || isLoading || isValidating) && (<Loading />)}
+        {error && (<Error />)}
         <ToTop />
       </div>
     </div>
