@@ -37,7 +37,7 @@ export default function PhotoModal ({photo, modalOpen, setModalOpen}) {
                     border-2
                     border-gray-300
                 `}>
-                    <div className={`
+                    <a className={`
                         bg-cover
                         bg-center
                         w-full
@@ -46,18 +46,24 @@ export default function PhotoModal ({photo, modalOpen, setModalOpen}) {
                         border-2
                         border-gray-300
                         shadow
+                        block
                     `} style={{
-                        backgroundImage: `url(${photo.url_l})`,
+                        backgroundImage: `url(${photo.url_l || photo.url_z})`,
                         backgroundColor: 'linear-gradient(45 deg, white, #efefef)'
-                    }} />
+                    }}
+                        href={`https://www.flickr.com/photos/${photo.owner}/${photo.id}`}
+                        title="View full image"
+                        target="_blank"
+                    />
+
                     <div className="m-auto w-[90%] text-left pt-4 pb-4">
                         <div className="flex pb-2">
-                            <div className="font-bold text-sm inline-block w-1/2">
+                            <div className="font-bold text-sm flex-auto">
                                 <a href={`https://www.flickr.com/people/${photo.owner}`} target="_blank" title="Go to creator's profile" className="text-lg text-sky-700 hover:text-sky-600 hover:underline">
                                     {photo.ownername}
                                 </a>
                             </div>
-                            <div className="text-sm inline-block w-1/2 text-right">
+                            <div className="text-sm text-right flex-auto">
                                 {format(new Date(photo.datetaken), 'PPP')}
                             </div>
                         </div>
@@ -67,6 +73,7 @@ export default function PhotoModal ({photo, modalOpen, setModalOpen}) {
                             </div>
                         )}
                     </div>
+
                 </div>
                 <a href="#" title="Close" className={`
                     fixed

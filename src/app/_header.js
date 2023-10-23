@@ -58,7 +58,7 @@ export default function Header ({ setInput }) {
                     focus-within:outline
                     focus-within:outline-slate-400
                 `} onSubmit={(e) => handleSubmit(e)}>
-                    <input type="text" id="search_input" name="search_input" placeholder="nature" className={`
+                    <input type="text" id="search_input" name="search_input" placeholder="landscape" className={`
                         text-xl
                         rounded-full
                         w-[80%]

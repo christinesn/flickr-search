@@ -1,4 +1,4 @@
-export default async function fetchData ({ input = 'nature' , page = 1 }) {
+export default async function fetchData ({ input, page = 1 }) {
     const uri = 'https://api.flickr.com/services/rest/'
 
     const params = {
