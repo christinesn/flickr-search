@@ -27,6 +27,8 @@ concurrency:
 jobs:
   # Build job
   build:
+    env:
+      API_KEY: ${{ secrets.API_KEY }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
