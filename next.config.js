@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
     images: {
         domains: ['live.staticflickr.com']
     },
-    env: {
-        API_KEY: 'api_key'
-    }
+    output: "export"
 }
 
 module.exports = nextConfig
