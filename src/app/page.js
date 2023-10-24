@@ -5,6 +5,7 @@ import Header from './_header'
 import ToTop from './_toTop'
 import Loading from './_loading'
 import Error from './_error'
+import NoMoreResults from './_noMoreResults'
 import useSWRIfinite from 'swr/infinite';
 import { useState, useEffect } from 'react'
 import fetchData from './helpers/fetchData';
@@ -13,7 +14,12 @@ export default function Home() {
   const [input, setInput] = useState('landscape')
 
   function getKey (pageIndex, previousPageData) {
-    if (previousPageData && (pageIndex >= previousPageData.pages)) return null
+    console.log(pageIndex, previousPageData)
+
+    if (previousPageData && !previousPageData.photos.photo.length) {
+      return null
+    }
+
     return {
       input,
       page: pageIndex
@@ -27,7 +33,11 @@ export default function Home() {
     revalidateFirstPage: false
   })
 
+  const reachedEnd = data && !data[data.length - 1].photos.photo.length
+
   function handleScroll () {
+    if (reachedEnd) return
+
     if (document.body.scrollHeight < window.scrollY + window.innerHeight + 100) {
       if (!isLoading && !error && !isValidating) {
         setSize(size + 1)
@@ -64,6 +74,7 @@ export default function Home() {
         ))}
         {(!data || isLoading || isValidating) && (<Loading />)}
         {error && (<Error />)}
+        {reachedEnd && (<NoMoreResults />)}
         <ToTop />
       </div>
     </div>
