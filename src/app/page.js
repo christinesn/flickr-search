@@ -14,8 +14,6 @@ export default function Home() {
   const [input, setInput] = useState('landscape')
 
   function getKey (pageIndex, previousPageData) {
-    console.log(pageIndex, previousPageData)
-
     if (previousPageData && !previousPageData.photos.photo.length) {
       return null
     }
