@@ -2,11 +2,12 @@
   "name": "flickr-search",
   "homepage": "https://christinesn.github.io/flickr-search",
   "version": "0.1.0",
-  "private": true,
+  "main": "index.js",
+  "author": "christinesn",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next build && next start",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
