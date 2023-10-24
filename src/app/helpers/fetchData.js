@@ -25,8 +25,6 @@ export default async function fetchData ({ input = 'landscape', page = 1 }) {
     const jsonRes = await res.json();
 
     if (!res.ok || jsonRes.stat !== "ok") {
-        console.log(jsonRes);
-        
         const error = new Error(jsonRes.message)
         error.status = jsonRes.code
 

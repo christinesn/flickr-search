@@ -63,6 +63,10 @@ export default function Home() {
 
   const photos = getPhotos()
 
+  if (error) {
+    console.error(error)
+  }
+
   return (
     <div className="w-full min-h-screen pb-24 pt-4 bg-slate-100">
       <Header setInput={setInput} />
@@ -70,7 +74,7 @@ export default function Home() {
         {data && photos && photos.map((photo) => (
           <Photo photo={photo} key={photo.id} />
         ))}
-        {(!data || isLoading || isValidating) && (<Loading />)}
+        {(!data || isLoading || isValidating) && !error && (<Loading />)}
         {error && (<Error />)}
         {reachedEnd && (<NoMoreResults />)}
         <ToTop />
