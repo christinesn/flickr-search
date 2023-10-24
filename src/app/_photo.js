@@ -54,7 +54,7 @@ export default function Photo ({ photo }) {
                             2xl:w-[18vw]
                             2xl:h-[16vw]
                         `}
-                        style={{ backgroundImage: `url(${photo.url_z})` }}
+                        style={{ backgroundImage: `url(${photo.url_z || photo.url_q})` }}
                     />
                 </div>
             </a>

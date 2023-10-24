@@ -8,6 +8,13 @@ export default function PhotoModal ({photo, modalOpen, setModalOpen}) {
         setModalOpen(false);
     }
 
+    function isPortrait () {
+        const height = photo.height_l || photo.height_z || photo.height_o || photo.height_q
+        const width = photo.width_l || photo.width_z || photo.width_o || photo.width_q
+
+        return height > width
+    }
+
     if (modalOpen) {
         return (
             <div onClick={() => setModalOpen(false)} className={`
@@ -39,7 +46,7 @@ export default function PhotoModal ({photo, modalOpen, setModalOpen}) {
                 `}>
                     <a className={`
                         bg-cover
-                        bg-center
+                        ${isPortrait() ? 'bg-top' : 'bg-center'}
                         w-full
                         h-[50vh]
                         rounded-xl
@@ -48,7 +55,7 @@ export default function PhotoModal ({photo, modalOpen, setModalOpen}) {
                         shadow
                         block
                     `} style={{
-                        backgroundImage: `url(${photo.url_l || photo.url_z})`,
+                        backgroundImage: `url(${photo.url_l || photo.url_z || photo.url_o || photo.url_q})`,
                         backgroundColor: 'linear-gradient(45 deg, white, #efefef)'
                     }}
                         href={`https://www.flickr.com/photos/${photo.owner}/${photo.id}`}

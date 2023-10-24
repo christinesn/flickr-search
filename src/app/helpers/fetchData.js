@@ -1,5 +1,9 @@
-export default async function fetchData ({ input, page = 1 }) {
+export default async function fetchData ({ input = 'landscape', page = 1 }) {
     const uri = 'https://api.flickr.com/services/rest/'
+
+    if (input.trim() === '') {
+        input = 'landscape'
+    }
 
     const params = {
         text: `${input} -sexy -ebody -secondlife -rezzroom`,
@@ -14,7 +18,7 @@ export default async function fetchData ({ input, page = 1 }) {
         per_page: 20,
         sort: 'relevance',
         min_upload_date: '2012-03-05 00:00:00',
-        extras: 'description,date_taken,owner_name,url_z,url_l'
+        extras: 'description,date_taken,owner_name,url_z,url_l,url_q,url_o'
     }
 
     const res = await fetch(uri + '?' + new URLSearchParams(params))
